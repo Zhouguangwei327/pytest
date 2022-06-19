@@ -2,8 +2,6 @@ import os
 from utils.times import strf_times
 
 
-
-
 class ConfigManager(object):
 
     def __init__(self):
@@ -27,10 +25,23 @@ class ConfigManager(object):
         """
         config_file = os.path.join(self.BASE_PATH, 'config', 'config.ini')
         if not os.path.exists(config_file):
-            raise Exception('%s文件不存在' % config_file)
-        return
+            raise FileNotFoundError('%s no such file or directory' % config_file)
+        return config_file
+
+    @property
+    def data_file(self):
+        """
+        :return: 测试数据的绝对路径
+        """
+        date_file = os.path.join(self.BASE_PATH, 'data', 'data.xls')
+        if not os.path.exists(date_file):
+            raise FileNotFoundError('%s no such file or directory' % date_file)
+        return date_file
 
 
 cm = ConfigManager()
-print(cm.BASE_PATH)
-print(cm.log_file)
+if __name__ == '__main__':
+    # print(cm.BASE_PATH)
+    # print(cm.log_file)
+    print(cm.config_file)
+    print(cm.data_file)
